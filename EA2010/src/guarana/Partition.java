@@ -12,6 +12,10 @@ public class Partition implements Comparable<Partition>{
 		partition = GraphUtil.generateRandomPartition(size);
 	}
 	
+	public Partition(int[] p) {
+		partition = p;
+	}
+	
 	public void setScore(int s) {
 		score = s;
 	}
