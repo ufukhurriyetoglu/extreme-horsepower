@@ -34,23 +34,7 @@ public class GeneticLocalSearch {
 		
 		Collections.sort(partitionList);
 		
-		/*
-		for (int i=0; i<t; i++) {
-			Collections.sort(partitionList);
-			int per = (int) (0.4*p);
-			int r1 = rand.nextInt(per);
-			int r2 = rand.nextInt(per);
-			while (r2 == r1) {
-				r2 = rand.nextInt(per);				
-			}
-			Partition parent1 = partitionList.get(r1);
-			Partition parent2 = partitionList.get(r2);
-			Partition child = new Partition(crossover(parent1, parent2));
-			g.setPartition(child);
-			if			
-		}*/
-		
-		int tournamentSize = (int) (0.1*p);
+		int tournamentSize = (int) (0.4*p);
 		for (int i=0; i<t; i++) {
 			//Collections.sort(partitionList);
 			List<Partition> tournament = new ArrayList<Partition>();
