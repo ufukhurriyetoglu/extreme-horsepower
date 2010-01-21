@@ -30,7 +30,7 @@ public class MultiStartLocalSearch {
 		
 		end = System.currentTimeMillis();
 		
-		System.out.println("Best found: "+best.getScore()+" elapsed: "+(end-start));
+		//System.out.println("Best found: "+best.getScore()+" elapsed: "+(end-start));
 		
 		return new SearchResult(alloptima, best);		
 	}
@@ -61,7 +61,7 @@ public class MultiStartLocalSearch {
 			
 		} while (System.currentTimeMillis() < start + t);		
 		
-		System.out.println("Best found: "+best.getScore());
+		//System.out.println("Best found: "+best.getScore());
 		
 		return new SearchResult(alloptima, best);
 	}
@@ -91,13 +91,13 @@ public class MultiStartLocalSearch {
 		System.out.println("STEP 2 -------------------------------- ");
 		
 		System.out.println("FM     -------------------------------- ");
-		for (int k = 0; k < 1000; k++) {
+		for (int k = 0; k < 100; k++) {
 			s = search_fixedNOptima(new FiducciaMattheyses(), 1000, g);
 			System.out.println(s.best.getScore());
 		}
 		
 		System.out.println("KL     -------------------------------- ");
-		for (int k = 0; k < 1000; k++) {
+		for (int k = 0; k < 100; k++) {
 			s = search_fixedNOptima(new FiducciaMattheyses(), 1000, g);
 			System.out.println(s.best.getScore());
 		}
