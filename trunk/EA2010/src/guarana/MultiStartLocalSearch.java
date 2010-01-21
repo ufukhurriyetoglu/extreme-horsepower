@@ -69,7 +69,7 @@ public class MultiStartLocalSearch {
 
 	
 	public static void main(String args[]) {
-		Graph g = Util.makeGraphFromFile("G500.005");
+		Graph g = Util.makeGraphFromFile("../G500.005");
 		
 		// this is the code that produces the output needed for point 1.
 		
