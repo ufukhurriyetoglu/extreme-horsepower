@@ -3,7 +3,7 @@ package guarana;
 import java.util.Arrays;
 
 
-public class Partition {
+public class Partition implements Comparable<Partition>{
 
 	private int[] partition;
 	private int score;
@@ -77,5 +77,14 @@ public class Partition {
 	
 	public static void main(String[] args) {
 		
+	}
+
+	/**
+	 * Compare the two partitions based on score only
+	 */
+	public int compareTo(Partition p) {
+		if (this.getScore() > p.getScore()) return 1;
+		else if (this.getScore() == p.getScore()) return 0;
+		else return -1;
 	}
 }
