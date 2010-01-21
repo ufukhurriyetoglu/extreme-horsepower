@@ -83,7 +83,6 @@ public class Util {
 		}
 		
 		if (d > p1.getSize()/2) {
-			System.out.println("YEAH");
 			p1.invert();
 			part1 = p1.getPartition();
 			d = 0;
