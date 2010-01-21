@@ -78,7 +78,6 @@ public class Util {
 		int[] part2 = p2.getPartition();
 		
 		for (int i=0; i < p1.getSize(); i++) {
-			System.out.println(part1[i]+ "-" + part2[i]);
 			if (part1[i] != part2[i]) d++;
 		}
 		
