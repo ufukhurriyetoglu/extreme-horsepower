@@ -1,3 +1,4 @@
+package guarana;
 
 public interface LocalSearch {
 	

@@ -1,3 +1,4 @@
+package guarana;
 
 public class TestBoth {
 	public static void main(String args[]) {

@@ -1,3 +1,4 @@
+package guarana;
 
 
 public class SwapDescriptor implements Comparable<SwapDescriptor> {
