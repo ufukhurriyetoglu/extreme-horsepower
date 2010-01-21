@@ -5,7 +5,7 @@ public class TestBoth {
 		
 		long start, end;
 		
-		Graph g = Util.makeGraphFromFile("G500.005");
+		Graph g = Util.makeGraphFromFile("U500.05");
 		g.initializePartition();
 		
 		Partition oldp = null; 

@@ -1,8 +1,12 @@
 package guarana;
 
+import java.util.ArrayList;
+
 public class IterativeLocalSearch {
 
-	public static Partition search_fixedNOptima(LocalSearch s, int n, int nswaps, Graph g) {
+	public static SearchResult search_fixedNOptima(LocalSearch s, int n, int nswaps, Graph g) {
+		ArrayList<Partition> alloptima = new ArrayList<Partition>();		
+		
 		long start, end;		
 		Partition old = null, cur;
 
@@ -23,13 +27,15 @@ public class IterativeLocalSearch {
 					g.setPartition((Partition) old.clone());
 				}
 			} catch (CloneNotSupportedException e) {}
+			
+			alloptima.add(cur);
 		}
 
 		end = System.currentTimeMillis();
 
 		System.out.println("Best found: "+old.getScore()+" elapsed: "+(end-start)+"ms");
 
-		return old;	
+		return new SearchResult(alloptima, old);	
 	}
 
 
@@ -37,6 +43,15 @@ public class IterativeLocalSearch {
 	public static void main(String args[]) {
 		Graph g = Util.makeGraphFromFile("U500.05");
 
-		search_fixedNOptima(new FiducciaMattheyses(), 10000, 80, g);		
+		// this is the code that produces the output needed for point 1.
+		
+		// step 1 - find 1000 local optima and plot the hamming distance between them and the best found	
+		
+		System.out.println("STEP 1 -------------------------------- ");
+		
+		SearchResult s = search_fixedNOptima(new FiducciaMattheyses(), 1000, 50, g);
+		
+		System.out.println("FM 1000 LO distances ------------------ ");
+		Util.outHammingDistandScores(s);				
 	}
 }
