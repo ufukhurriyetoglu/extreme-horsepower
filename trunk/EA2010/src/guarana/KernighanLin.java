@@ -1,3 +1,4 @@
+package guarana;
 import java.util.ArrayList;
 
 public class KernighanLin implements LocalSearch {	
