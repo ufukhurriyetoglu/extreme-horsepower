@@ -1,28 +1,105 @@
 package guarana;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
 
 public class GeneticLocalSearch {
 
-	public static Partition search_fixedPopulation(LocalSearch ls, int p, Graph g) {
+	static Random rand = new Random();
+	
+	/**
+	 * 
+	 * @param ls local search algorithm
+	 * @param p population
+	 * @param t times
+	 * @param g graph
+	 * @return
+	 */
+	public static Partition search_fixedPopulation(LocalSearch ls, int p, int t, Graph g) {
 		List<Partition> partitionList = new ArrayList<Partition>();		
 
 		//generate initial population
 		for (int i=0; i<p; i++) {
-			partitionList.add(new Partition(g.getVertices().size()));			
+			Partition part = new Partition(g.getVertices().size());
+			System.out.print(part.getScore() + "/");
+			//calculate score of partition
+			g.setPartition(part);
+			System.out.print(part.getScore() + "/");
+			part = ls.search(g);
+			System.out.println(part.getScore());
+			partitionList.add(part);	
 		}
+		
+		Collections.sort(partitionList);
+		
+		/*
+		for (int i=0; i<t; i++) {
+			Collections.sort(partitionList);
+			int per = (int) (0.4*p);
+			int r1 = rand.nextInt(per);
+			int r2 = rand.nextInt(per);
+			while (r2 == r1) {
+				r2 = rand.nextInt(per);				
+			}
+			Partition parent1 = partitionList.get(r1);
+			Partition parent2 = partitionList.get(r2);
+			Partition child = new Partition(crossover(parent1, parent2));
+			g.setPartition(child);
+			if			
+		}*/
+		
+		int tournamentSize = (int) (0.1*p);
+		for (int i=0; i<t; i++) {
+			//Collections.sort(partitionList);
+			List<Partition> tournament = new ArrayList<Partition>();
+			ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
+			int counter = 1;
+			while (counter < tournamentSize) {
+				int r = rand.nextInt(p-counter);
+				tournament.add(cl.get(r));
+				cl.remove(r);
+				counter++;
+			}
+			Collections.sort(tournament);
+			Partition parent1 = tournament.get(0);
+			Partition parent2 = tournament.get(1);
+			Partition child = new Partition(crossover(parent1, parent2));
+			g.setPartition(child);
+			child = ls.search(g);
+			if (child.compareTo(partitionList.get(p-1)) == 1 ) {
+				for (int j=0; j<p; j++) {
+					Partition p1 = partitionList.get(j);
+					if (p1.compareTo(child) < 0) {
+						partitionList.add(j, child);
+						break;
+					}
+					else if (p1.compareTo(child) == 0) {
+						if (!p1.equals(child)) {
+							partitionList.add(j, child);
+							break;
+						}
+						else break;
+					}
+				}
+				partitionList.remove(p);
+			}
+		}
+		
+		Collections.sort(partitionList);
+		System.out.println(partitionList.get(0).getScore());
 		
 		
 		return null;		
 	}
 	
 	private static int[] crossover(Partition p1, Partition p2) {
-		//int distance = Util.hammingDistance(p1, p2);
-		if (p1.getSize() != p2.getSize()) System.exit(-1);
 		
-		Random rand = new Random();
+		if (p1.getSize() != p2.getSize()) System.exit(-1);
+		//will invert one partition if needed
+		Util.hammingDistance(p1, p2);
+		
 		int[] part1 = p1.getPartition();
 		int[] part2 = p2.getPartition();
 		int[] ret = new int[p1.getSize()];
@@ -48,19 +125,28 @@ public class GeneticLocalSearch {
 	}
 	
 	public static void main(String[] args) {
-		Partition p1 = new Partition(500);
+		/*Partition p1 = new Partition(500);
 		Partition p2 = new Partition(500);
 		int distance = Util.hammingDistance(p1, p2);
 		System.out.println(distance);
 		int[] p = crossover(p1,p2);
-		int[] pp1 = p1.getPartition();
-		int[] pp2 = p2.getPartition();
-		
+		Partition pp1 = new Partition(500);
+		pp1.setPartition(p);
+		int distance2 = Util.hammingDistance(p1, pp1);
+		int distance3 = Util.hammingDistance(p2, pp1);
+		System.out.println(distance2);
+		System.out.println(distance3);
+		pp1.setPartition(crossover(p1,pp1));
+		System.out.println(Util.hammingDistance(p1, pp1));
 		int c = 0;
 		for (int i=0; i<p1.getSize(); i++) {
-			System.out.println(pp1[i] + "-" + pp2[i] + "-" + p[i]);
+			//System.out.println(pp1[i] + "-" + pp2[i] + "-" + p[i]);
 			if (p[i] == 1) c++;
 		}
-		System.out.println(c);
+		//System.out.println(c);
+		*/
+		Graph g = Util.makeGraphFromFile("U500.05");
+
+		search_fixedPopulation(new FiducciaMattheyses(), 50, 1000, g);
 	}
 }
