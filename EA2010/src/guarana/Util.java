@@ -91,6 +91,12 @@ public class Util {
 		}
 		return d;
 	}
+	
+	public static void outHammingDistandScores(SearchResult s) {
+		for (Partition th : s.alloptima) {
+			System.out.println (Util.hammingDistance(s.best, th)+", "+th.getScore());
+		}
+	}
 	  
 	/**
 	 * @param args

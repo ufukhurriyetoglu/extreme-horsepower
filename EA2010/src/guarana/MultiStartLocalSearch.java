@@ -30,7 +30,7 @@ public class MultiStartLocalSearch {
 		
 		end = System.currentTimeMillis();
 		
-		//System.out.println("Best found: "+best.getScore()+" elapsed: "+(end-start));
+		System.out.println("Best found: "+best.getScore()+" elapsed: "+(end-start));
 		
 		return new SearchResult(alloptima, best);		
 	}
@@ -69,7 +69,7 @@ public class MultiStartLocalSearch {
 
 	
 	public static void main(String args[]) {
-		Graph g = Util.makeGraphFromFile("../G500.005");
+		Graph g = Util.makeGraphFromFile("G500.005");
 		
 		// this is the code that produces the output needed for point 1.
 		
@@ -80,12 +80,12 @@ public class MultiStartLocalSearch {
 		SearchResult s = search_fixedNOptima(new FiducciaMattheyses(), 1000, g);
 		
 		System.out.println("FM 1000 LO distances ------------------ ");
-		outHammingDistandScores(s);
+		Util.outHammingDistandScores(s);
 		
 		s = search_fixedNOptima(new KernighanLin(), 1000, g);
 		
 		System.out.println("KL 1000 LO distances ------------------ ");
-		outHammingDistandScores(s);
+		Util.outHammingDistandScores(s);
 		
 		// step 2 - run 1000 times MSLS fixed Noptima (1000) with FM and KL output the best scores found
 		System.out.println("STEP 2 -------------------------------- ");
@@ -104,12 +104,4 @@ public class MultiStartLocalSearch {
 		
 		//search_fixedTime(new KernighanLin(), 10000, g);		
 	}
-	
-	private static void outHammingDistandScores(SearchResult s) {
-		for (Partition th : s.alloptima) {
-			System.out.println (Util.hammingDistance(s.best, th)+", "+th.getScore());
-		}
-	}
-	
-	
 }
