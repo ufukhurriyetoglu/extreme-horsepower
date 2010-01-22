@@ -37,6 +37,7 @@ public class GeneticLocalSearch {
 		//int tournamentSize = (int) (0.4*p);
 		
 		for (int i=0; i<t; i++) {
+			Partition parent1, parent2;
 			//Collections.sort(partitionList);
 			
 			/* 
@@ -52,16 +53,14 @@ public class GeneticLocalSearch {
 				counter++;
 			}
 			Collections.sort(tournament);
-			Partition parent1 = tournament.get(0);
-			Partition parent2 = tournament.get(1);
+			parent1 = tournament.get(0);
+			parent2 = tournament.get(1);
 			
 			*/ //Tournament
 			
 			/*
 			 
 			// Random parent choice without selection
-			Partition parent1, parent2;
-			
 			
 			int p1_index = rand.nextInt(p-1), p2_index;			
 			parent1 = partitionList.get(p1_index);
@@ -73,14 +72,14 @@ public class GeneticLocalSearch {
 			parent2 = partitionList.get(p2_index);			
 			*/ //Random
 			
-			// random choice with exponential distributions
-			Partition parent1, parent2;
+			// random choice with exponential distributions			
 						
 			int p1_index = expdistchoose(-1, p);
 			int p2_index = expdistchoose(p1_index, p);
 			
 			parent1 = partitionList.get(p1_index);
 			parent2 = partitionList.get(p2_index);			
+			// Random 2
 			
 			// offspring
 			
