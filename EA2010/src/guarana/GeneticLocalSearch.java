@@ -55,7 +55,7 @@ public class GeneticLocalSearch {
 			Partition parent1 = tournament.get(0);
 			Partition parent2 = tournament.get(1);
 			
-			*/
+			*/ //Tournament
 			
 			/*
 			 
@@ -71,7 +71,7 @@ public class GeneticLocalSearch {
 			} while (p2_index == p1_index);
 			
 			parent2 = partitionList.get(p2_index);			
-			*/
+			*/ //Random
 			
 			// random choice with exponential distributions
 			Partition parent1, parent2;
@@ -124,6 +124,7 @@ public class GeneticLocalSearch {
 		
 		return r;
 	}
+	
 	
 	private static int[] crossover(Partition p1, Partition p2) {
 		
