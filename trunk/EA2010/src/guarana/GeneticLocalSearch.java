@@ -47,7 +47,7 @@ public class GeneticLocalSearch {
 			ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
 			int counter = 1;
 			while (counter < tournamentSize) {
-				int r = rand.nextInt(p-counter);
+				int r = rand.nextInt(cl.size());
 				tournament.add(cl.get(r));
 				cl.remove(r);
 				counter++;
