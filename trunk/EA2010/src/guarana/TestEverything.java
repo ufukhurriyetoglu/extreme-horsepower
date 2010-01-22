@@ -3,7 +3,7 @@ package guarana;
 public class TestEverything {
 	public static void main(String args[]) {
 		
-		Graph g = Util.makeGraphFromFile("../G500.005");
+		Graph g = Util.makeGraphFromFile("G500.005");
 		
 		SearchResult s = null;;
 
@@ -76,7 +76,7 @@ public class TestEverything {
 		
 		
 		
-		g = Util.makeGraphFromFile("../U500.05");
+		g = Util.makeGraphFromFile("U500.05");
 		System.out.println("GRAPH 2 - U500.05");		
 		
 		System.out.println("STEP 1 fixed n LO hamming-------------- ");

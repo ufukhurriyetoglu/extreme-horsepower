@@ -30,9 +30,9 @@ public class MultiStartLocalSearch {
 		
 		end = System.currentTimeMillis();
 		
-		System.out.println("Best found: "+best.getScore()+" elapsed: "+(end-start));
+		//System.out.println("Best found: "+best.getScore()+" elapsed: "+);
 		
-		return new SearchResult(alloptima, best);		
+		return new SearchResult(alloptima, best, (end-start));		
 	}
 	
 	public static SearchResult search_fixedTime(LocalSearch s, int t, Graph g) {
@@ -63,7 +63,7 @@ public class MultiStartLocalSearch {
 		
 		//System.out.println("Best found: "+best.getScore());
 		
-		return new SearchResult(alloptima, best);
+		return new SearchResult(alloptima, best, 0);
 	}
 	
 
