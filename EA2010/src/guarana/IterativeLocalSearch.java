@@ -33,9 +33,9 @@ public class IterativeLocalSearch {
 
 		end = System.currentTimeMillis();
 
-		System.out.println("Best found: "+old.getScore()+" elapsed: "+(end-start)+"ms");
+		//System.out.println("Best found: "+old.getScore()+" elapsed: "+(end-start)+"ms");
 
-		return new SearchResult(alloptima, old);	
+		return new SearchResult(alloptima, old, (end-start));	
 	}
 
 
