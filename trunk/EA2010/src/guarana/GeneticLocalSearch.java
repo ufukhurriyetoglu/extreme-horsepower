@@ -34,9 +34,14 @@ public class GeneticLocalSearch {
 		
 		Collections.sort(partitionList);
 		
-		int tournamentSize = (int) (0.4*p);
+		//int tournamentSize = (int) (0.4*p);
+		
 		for (int i=0; i<t; i++) {
 			//Collections.sort(partitionList);
+			
+			/* 
+			
+			//Tournament selection
 			List<Partition> tournament = new ArrayList<Partition>();
 			ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
 			int counter = 1;
@@ -49,24 +54,54 @@ public class GeneticLocalSearch {
 			Collections.sort(tournament);
 			Partition parent1 = tournament.get(0);
 			Partition parent2 = tournament.get(1);
+			
+			*/
+			
+			/*
+			 
+			// Random parent choice without selection
+			Partition parent1, parent2;
+			
+			
+			int p1_index = rand.nextInt(p-1), p2_index;			
+			parent1 = partitionList.get(p1_index);
+			
+			do {
+				p2_index = rand.nextInt(p-1);
+			} while (p2_index == p1_index);
+			
+			parent2 = partitionList.get(p2_index);			
+			*/
+			
+			// random choice with exponential distributions
+			Partition parent1, parent2;
+						
+			int p1_index = expdistchoose(-1, p);
+			int p2_index = expdistchoose(p1_index, p);
+			
+			parent1 = partitionList.get(p1_index);
+			parent2 = partitionList.get(p2_index);			
+			
+			// offspring
+			
 			Partition child = new Partition(crossover(parent1, parent2));
 			g.setPartition(child);
+			
 			child = ls.search(g);
-			if (child.compareTo(partitionList.get(p-1)) == 1 ) {
-				for (int j=0; j<p; j++) {
+			
+			// insert in the population
+			
+			if (child.compareTo(partitionList.get(p-1)) == -1 ) {
+				
+				for (int j = 0; j<p; j++) {
 					Partition p1 = partitionList.get(j);
-					if (p1.compareTo(child) < 0) {
+					
+					if (p1.compareTo(child) == 1 || (p1.compareTo(child) == 0 && !p1.equals(child))) {
 						partitionList.add(j, child);
 						break;
-					}
-					else if (p1.compareTo(child) == 0) {
-						if (!p1.equals(child)) {
-							partitionList.add(j, child);
-							break;
-						}
-						else break;
-					}
+					}					
 				}
+				
 				partitionList.remove(p);
 			}
 		}
@@ -76,6 +111,18 @@ public class GeneticLocalSearch {
 		
 		
 		return null;		
+	}
+	
+	// chose an index from a random exponential distribution such that it's different from j and < p
+	private static int expdistchoose(int j, int p) {
+		int r; 
+	
+		do {
+			float f = rand.nextFloat();
+			r = (int) (Math.round( -Math.log(f) / 0.1));			
+		} while (r >= p || r == j);
+		
+		return r;
 	}
 	
 	private static int[] crossover(Partition p1, Partition p2) {
@@ -131,6 +178,6 @@ public class GeneticLocalSearch {
 		*/
 		Graph g = Util.makeGraphFromFile("U500.05");
 
-		search_fixedPopulation(new FiducciaMattheyses(), 50, 1000, g);
+		search_fixedPopulation(new FiducciaMattheyses(), 50, 10000, g);
 	}
 }

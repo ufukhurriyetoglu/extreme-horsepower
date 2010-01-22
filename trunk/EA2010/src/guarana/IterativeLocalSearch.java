@@ -49,7 +49,7 @@ public class IterativeLocalSearch {
 		
 		System.out.println("STEP 1 -------------------------------- ");
 		
-		SearchResult s = search_fixedNOptima(new FiducciaMattheyses(), 1000, 50, g);
+		SearchResult s = search_fixedNOptima(new FiducciaMattheyses(), 10000, 50, g);
 		
 		System.out.println("FM 1000 LO distances ------------------ ");
 		Util.outHammingDistandScores(s);				
