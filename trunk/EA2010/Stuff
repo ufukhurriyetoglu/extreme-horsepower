@@ -5,5 +5,5 @@ Stuff that have to be done:
 	b) Dirk's idea discovering the area of best solution
 2) Make KL faster
 	a) Keep track of best vertex to switch for each partition
-3) 
+3) Try Mutation only when the child is equal to the worst of partitionList
 
