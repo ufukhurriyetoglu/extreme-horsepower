@@ -1,0 +1,9 @@
+Stuff that have to be done:
+
+1) Case study
+	a) Try GLS with growing pop size
+	b) Dirk's idea discovering the area of best solution
+2) Make KL faster
+	a) Keep track of best vertex to switch for each partition
+3) 
+
