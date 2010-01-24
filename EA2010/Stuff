@@ -1,7 +1,7 @@
 Stuff that have to be done:
 
 1) Case study
-	a) Try GLS with growing pop size
+	a) Try GLS with growing pop size -> BULSHIT results
 	b) Dirk's idea discovering the area of best solution
 2) COMPLETED Make KL faster
 3) Try Mutation only when the child is equal to the worst of partitionList
