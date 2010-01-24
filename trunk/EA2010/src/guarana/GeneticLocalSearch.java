@@ -8,8 +8,9 @@ import java.util.Random;
 public class GeneticLocalSearch {
 
 	static Random rand = new Random();
-	static int RANDOM = 0;
-	static int TOURNAMENT = 1;
+	public static int RANDOM = 0;
+	public static int TOURNAMENT = 1;
+	public static int TRUNCATION = 2;
 	
 	/**
 	 * 
@@ -19,7 +20,7 @@ public class GeneticLocalSearch {
 	 * @param g graph
 	 * @return
 	 */
-	public static SearchResult search_fixedPopulation(LocalSearch ls, int p, int t, Graph g) {
+	public static SearchResult search_fixedPopulation(LocalSearch ls, int p, int t, int sel, Graph g) {
 		List<Partition> partitionList = new ArrayList<Partition>();
 		List<Partition> alloptima = new ArrayList<Partition>();
 
@@ -34,58 +35,63 @@ public class GeneticLocalSearch {
 			//System.out.print(part.getScore() + "/");
 			part = ls.search(g);
 			//System.out.println(part.getScore());
-			partitionList.add(part);	
+			partitionList.add(part);
 		}
 		alloptima.addAll(partitionList);
 		Collections.sort(partitionList);
 		
 		
 		for (int i=0; i<t; i++) {
-			Partition parent1, parent2;
-			//Collections.sort(partitionList);
+			Partition parent1, parent2;			
 			
-			 
-			/*
 			//Tournament selection
-			int tournamentSize = (int) (0.4*p);
-			List<Partition> tournament = new ArrayList<Partition>();
-			ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
-			int counter = 1;
-			while (counter < tournamentSize) {
-				int r = rand.nextInt(cl.size());
-				tournament.add(cl.get(r));
-				cl.remove(r);
-				counter++;
-			}
-			Collections.sort(tournament);
-			parent1 = tournament.get(0);
-			parent2 = tournament.get(1);
+			if (sel == 1) {
+				int tournamentSize = (int) (0.4*p);
+				List<Partition> tournament = new ArrayList<Partition>();
+				ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
+				int counter = 1;
+				while (counter < tournamentSize) {
+					int r = rand.nextInt(cl.size());
+					tournament.add(cl.get(r));
+					cl.remove(r);
+					counter++;
+				}
+				Collections.sort(tournament);
+				int index1 = expdistchoose(-1, tournamentSize-1);
+				parent1 = tournament.get(index1);
+				parent2 = tournament.get(expdistchoose(index1, tournamentSize-1));			
+			} //Tournament end
 			
-			*///Tournament
+			//Truncation selection
+			else if (sel == 2) {
+				//Truncation selection
+				float proportion = 2;
+				int trunc = (int) (p/proportion);
+				int index = rand.nextInt(trunc-1);
+				parent1 = partitionList.get(index);
+				int index2;
+				do {
+					index2 = rand.nextInt(trunc-1);
+				} while(index2 == index);
+				parent2 = partitionList.get(index2);
+			}//Truncation end
 			
+			//Random selection
+			else {				
+				int p1_index = rand.nextInt(p-1), p2_index;			
+				parent1 = partitionList.get(p1_index);				
+				do {
+					p2_index = rand.nextInt(p-1);
+				} while (p2_index == p1_index);
+				parent2 = partitionList.get(p2_index);			
+			} //Random end
 			
-			/*
-			// Random parent choice without selection
-			
-			int p1_index = rand.nextInt(p-1), p2_index;			
-			parent1 = partitionList.get(p1_index);
-			
-			do {
-				p2_index = rand.nextInt(p-1);
-			} while (p2_index == p1_index);
-			
-			parent2 = partitionList.get(p2_index);			
-			*/ //Random
-			
-			
-			// random choice with exponential distributions			
-						
+			/*// random choice with exponential distributions						
 			int p1_index = expdistchoose(-1, p);
-			int p2_index = expdistchoose(p1_index, p);
-			
+			int p2_index = expdistchoose(p1_index, p);			
 			parent1 = partitionList.get(p1_index);
 			parent2 = partitionList.get(p2_index);			
-			// Random 2
+			*/// Random 2
 			
 			// offspring
 			
@@ -162,11 +168,11 @@ public class GeneticLocalSearch {
 	}
 	
 	public static void main(String[] args) {
-		int population = 150;
-		int times = 3000;
+		int population = 50;
+		int times = 1000;
 		
 		Graph g = Util.makeGraphFromFile("U500.05");
-		SearchResult s = search_fixedPopulation(new FiducciaMattheyses(), population, times, g);
+		SearchResult s = search_fixedPopulation(new FiducciaMattheyses(), population, times, RANDOM, g);
 		System.out.println("GLS-FM Pop= "+population
 				+" Times= "+times+" LO distances ----------------");
 		Util.outHammingDistandScores(s);
