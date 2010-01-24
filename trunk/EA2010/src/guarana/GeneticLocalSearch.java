@@ -8,6 +8,8 @@ import java.util.Random;
 public class GeneticLocalSearch {
 
 	static Random rand = new Random();
+	static int RANDOM = 0;
+	static int TOURNAMENT = 1;
 	
 	/**
 	 * 
@@ -17,32 +19,35 @@ public class GeneticLocalSearch {
 	 * @param g graph
 	 * @return
 	 */
-	public static Partition search_fixedPopulation(LocalSearch ls, int p, int t, Graph g) {
-		List<Partition> partitionList = new ArrayList<Partition>();		
+	public static SearchResult search_fixedPopulation(LocalSearch ls, int p, int t, Graph g) {
+		List<Partition> partitionList = new ArrayList<Partition>();
+		List<Partition> alloptima = new ArrayList<Partition>();
 
+		long time = System.currentTimeMillis();
+		
 		//generate initial population
 		for (int i=0; i<p; i++) {
 			Partition part = new Partition(g.getVertices().size());
-			System.out.print(part.getScore() + "/");
+			//System.out.print(part.getScore() + "/");
 			//calculate score of partition
 			g.setPartition(part);
-			System.out.print(part.getScore() + "/");
+			//System.out.print(part.getScore() + "/");
 			part = ls.search(g);
-			System.out.println(part.getScore());
+			//System.out.println(part.getScore());
 			partitionList.add(part);	
 		}
-		
+		alloptima.addAll(partitionList);
 		Collections.sort(partitionList);
 		
-		//int tournamentSize = (int) (0.4*p);
 		
 		for (int i=0; i<t; i++) {
 			Partition parent1, parent2;
 			//Collections.sort(partitionList);
 			
-			/* 
-			
+			 
+			/*
 			//Tournament selection
+			int tournamentSize = (int) (0.4*p);
 			List<Partition> tournament = new ArrayList<Partition>();
 			ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
 			int counter = 1;
@@ -56,10 +61,10 @@ public class GeneticLocalSearch {
 			parent1 = tournament.get(0);
 			parent2 = tournament.get(1);
 			
-			*/ //Tournament
+			*///Tournament
+			
 			
 			/*
-			 
 			// Random parent choice without selection
 			
 			int p1_index = rand.nextInt(p-1), p2_index;			
@@ -71,6 +76,7 @@ public class GeneticLocalSearch {
 			
 			parent2 = partitionList.get(p2_index);			
 			*/ //Random
+			
 			
 			// random choice with exponential distributions			
 						
@@ -87,6 +93,7 @@ public class GeneticLocalSearch {
 			g.setPartition(child);
 			
 			child = ls.search(g);
+			alloptima.add(child);
 			
 			// insert in the population
 			
@@ -107,9 +114,8 @@ public class GeneticLocalSearch {
 		
 		Collections.sort(partitionList);
 		System.out.println(partitionList.get(0).getScore());
-		
-		
-		return null;		
+		time = System.currentTimeMillis() - time;
+		return new SearchResult(alloptima, partitionList.get(0), time);		
 	}
 	
 	// chose an index from a random exponential distribution such that it's different from j and < p
@@ -156,28 +162,15 @@ public class GeneticLocalSearch {
 	}
 	
 	public static void main(String[] args) {
-		/*Partition p1 = new Partition(500);
-		Partition p2 = new Partition(500);
-		int distance = Util.hammingDistance(p1, p2);
-		System.out.println(distance);
-		int[] p = crossover(p1,p2);
-		Partition pp1 = new Partition(500);
-		pp1.setPartition(p);
-		int distance2 = Util.hammingDistance(p1, pp1);
-		int distance3 = Util.hammingDistance(p2, pp1);
-		System.out.println(distance2);
-		System.out.println(distance3);
-		pp1.setPartition(crossover(p1,pp1));
-		System.out.println(Util.hammingDistance(p1, pp1));
-		int c = 0;
-		for (int i=0; i<p1.getSize(); i++) {
-			//System.out.println(pp1[i] + "-" + pp2[i] + "-" + p[i]);
-			if (p[i] == 1) c++;
-		}
-		//System.out.println(c);
-		*/
+		int population = 150;
+		int times = 3000;
+		
 		Graph g = Util.makeGraphFromFile("U500.05");
-
-		search_fixedPopulation(new FiducciaMattheyses(), 50, 10000, g);
+		SearchResult s = search_fixedPopulation(new FiducciaMattheyses(), population, times, g);
+		System.out.println("GLS-FM Pop= "+population
+				+" Times= "+times+" LO distances ----------------");
+		Util.outHammingDistandScores(s);
+		System.out.println("\nBest Result Score: " + s.best.getScore());
+		System.out.println("Time needed: " + s.elapsed);
 	}
 }
