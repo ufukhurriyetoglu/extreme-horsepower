@@ -34,92 +34,49 @@ public class GeneticLocalSearchTrunc {
 		
 		Collections.sort(partitionList);
 		
-		//int tournamentSize = (int) (0.4*p);
-		
 		for (int i=0; i<t; i++) {
 			Partition parent1, parent2;
 			//Collections.sort(partitionList);
-			
-			/* 
-			
-			//Tournament selection
-			List<Partition> tournament = new ArrayList<Partition>();
-			ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
-			int counter = 1;
-			while (counter < tournamentSize) {
-				int r = rand.nextInt(p-counter);
-				tournament.add(cl.get(r));
-				cl.remove(r);
-				counter++;
-			}
-			Collections.sort(tournament);
-			parent1 = tournament.get(0);
-			parent2 = tournament.get(1);
-			
-			*/ //Tournament
-			
-			/*
-			 
-			// Random parent choice without selection
-			
-			int p1_index = rand.nextInt(p-1), p2_index;			
-			parent1 = partitionList.get(p1_index);
-			
-			do {
-				p2_index = rand.nextInt(p-1);
-			} while (p2_index == p1_index);
-			
-			parent2 = partitionList.get(p2_index);			
-			*/ //Random
-			
-			// random choice with exponential distributions			
-			/*			
-			int p1_index = expdistchoose(-1, p);
-			int p2_index = expdistchoose(p1_index, p);
-			
-			parent1 = partitionList.get(p1_index);
-			parent2 = partitionList.get(p2_index);			
-			*/// Random 2
-			
+						
 			//Truncation selection
 			float proportion = 2;
 			int trunc = (int) (p/proportion);
-			Collections.sort(partitionList);
+			//Collections.sort(partitionList);
 			
-			for (int i1=0; i1<proportion; i1++ ) {
-			int index = rand.nextInt(trunc-1);
-			parent1 = partitionList.get(index);
-			int index2;
-			do {
-				index2 = rand.nextInt(trunc-1);
-			} while(index2 == index);
-			parent2 = partitionList.get(index2);
-			// offspring
-			
-			int[] cr = crossover(parent1, parent2);
-			//mutate(cr);
-			Partition child = new Partition(cr);
-			g.setPartition(child);			
-			child = ls.search(g);
-			
-			System.out.println(parent1.getScore() +"+"+parent2.getScore()+"->"+child.getScore());
-			// insert in the population
-			
-			if (child.compareTo(partitionList.get(p-1)) == -1 ) {
+			//for (int i1=0; i1<proportion; i1++ ) {
+				int index = rand.nextInt(trunc-1);
+				parent1 = partitionList.get(index);
+				int index2;
+				do {
+					index2 = rand.nextInt(trunc-1);
+				} while(index2 == index);
+				parent2 = partitionList.get(index2);
+				// offspring
 				
-				for (int j = 0; j<p; j++) {
-					Partition p1 = partitionList.get(j);
+				int[] cr = crossover(parent1, parent2);
+				//mutate(cr);
+				Partition child = new Partition(cr);
+				g.setPartition(child);			
+				child = ls.search(g);
+				
+				System.out.println(parent1.getScore() +"+"+parent2.getScore()+"->"+child.getScore());
+				// insert in the population
+				
+				if (child.compareTo(partitionList.get(p-1)) == -1 ) {
 					
-					if (p1.compareTo(child) == 1 || (p1.compareTo(child) == 0 && !p1.equals(child))) {
-						System.out.println("CHANGE");
-						partitionList.add(j, child);
-						break;
-					}					
+					for (int j = 0; j<p; j++) {
+						Partition p1 = partitionList.get(j);
+						
+						if (p1.compareTo(child) == 1 || (p1.compareTo(child) == 0 && !p1.equals(child))) {
+							System.out.println("CHANGE");
+							partitionList.add(j, child);
+							break;
+						}					
+					}
+					
+					partitionList.remove(p);
 				}
-				
-				partitionList.remove(p);
-			}
-			}
+			//}
 		}
 		
 		//Collections.sort(partitionList);
@@ -204,8 +161,8 @@ public class GeneticLocalSearchTrunc {
 	} */
 	
 	public static void main(String[] args) {
-		Graph g = Util.makeGraphFromFile("U500.05");
+		Graph g = Util.makeGraphFromFile("G500.005");
 
-		search_fixedPopulation(new FiducciaMattheyses(), 50, 500, g);
+		search_fixedPopulation(new FiducciaMattheyses(), 150, 100, g);
 	}
 }
