@@ -20,16 +20,7 @@ public class SwapDescriptor implements Comparable<SwapDescriptor> {
 	}	
 	
 	private void computeSwapGain() {
-		int tosub = 0;
-
-		//check if they are connected
-		//TODO: create a areNeighbours() method in the graph class
-		for (Vertex th : g.getNeighbors(vA)) {
-			if (vB.equals(th)) {
-				tosub = 1;
-				break;
-			}
-		}
+		int tosub = (g.areNeighbours(vA, vB) ? 1 : 0);
 
 		gain = vA.getGain() + vB.getGain() - tosub;				
 	}

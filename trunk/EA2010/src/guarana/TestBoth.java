@@ -15,11 +15,11 @@ public class TestBoth {
 		} catch (CloneNotSupportedException e) {}
 		
 		System.out.println("startig score: "+g.getPartitioning().getScore());
-		System.out.println("maxdegree: "+g.getMaxDegree());
+		System.out.println("maxdegree: "+g.getMaxDegree());		
 		
 		start = System.currentTimeMillis();
 		Partition p = (new KernighanLin()).search(g);
-		end = System.currentTimeMillis();		
+		end = System.currentTimeMillis();
 		
 		System.out.println("final score with KL:"+p.getScore()+ " elapsed: "+(end-start)+" ms");
 		

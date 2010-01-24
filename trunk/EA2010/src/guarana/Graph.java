@@ -127,6 +127,16 @@ public class Graph {
 		
 	}
 	
+	public boolean areNeighbours(Vertex a, Vertex b) {
+		for (Vertex th : getNeighbors(a)) {
+			if (b.equals(th)) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	/**
 	 * @param v
 	 * @return Return the neighbors of given vertex v as 
