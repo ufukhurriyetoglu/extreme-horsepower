@@ -97,7 +97,7 @@ public class GeneticLocalSearchTrunc {
 			// offspring
 			
 			int[] cr = crossover(parent1, parent2);
-			mutate(cr);
+			//mutate(cr);
 			Partition child = new Partition(cr);
 			g.setPartition(child);			
 			child = ls.search(g);
@@ -130,19 +130,6 @@ public class GeneticLocalSearchTrunc {
 		return null;		
 	}
 	
-	// chose an index from a random exponential distribution such that it's different from j and < p
-	private static int expdistchoose(int j, int p) {
-		int r; 
-	
-		do {
-			float f = rand.nextFloat();
-			r = (int) (Math.round( -Math.log(f) / 0.1));			
-		} while (r >= p || r == j);
-		
-		return r;
-	}
-	
-	
 	private static int[] crossover(Partition p1, Partition p2) {
 		
 		if (p1.getSize() != p2.getSize()) System.exit(-1);
@@ -172,6 +159,7 @@ public class GeneticLocalSearchTrunc {
 		return ret;
 	}
 	
+	/*
 	private static void mutate(int[] partition) {
 		//Probability of mutation in percentage
 		int prob = 1;
@@ -213,29 +201,9 @@ public class GeneticLocalSearchTrunc {
 			else counter1++;
 		}
 		System.out.println(counter0+"/"+counter1);
-	}
+	} */
 	
 	public static void main(String[] args) {
-		/*Partition p1 = new Partition(500);
-		Partition p2 = new Partition(500);
-		int distance = Util.hammingDistance(p1, p2);
-		System.out.println(distance);
-		int[] p = crossover(p1,p2);
-		Partition pp1 = new Partition(500);
-		pp1.setPartition(p);
-		int distance2 = Util.hammingDistance(p1, pp1);
-		int distance3 = Util.hammingDistance(p2, pp1);
-		System.out.println(distance2);
-		System.out.println(distance3);
-		pp1.setPartition(crossover(p1,pp1));
-		System.out.println(Util.hammingDistance(p1, pp1));
-		int c = 0;
-		for (int i=0; i<p1.getSize(); i++) {
-			//System.out.println(pp1[i] + "-" + pp2[i] + "-" + p[i]);
-			if (p[i] == 1) c++;
-		}
-		//System.out.println(c);
-		*/
 		Graph g = Util.makeGraphFromFile("U500.05");
 
 		search_fixedPopulation(new FiducciaMattheyses(), 50, 500, g);
