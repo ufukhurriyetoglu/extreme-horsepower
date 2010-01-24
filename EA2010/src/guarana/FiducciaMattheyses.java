@@ -15,8 +15,10 @@ public class FiducciaMattheyses implements LocalSearch {
 		do  {			
 			improovement = false;
 
-			if (overallbest != null) {
-				g.setPartition(overallbest);
+			if (overallbest != null) {				
+				try {
+					g.setPartition((Partition) overallbest.clone());
+				} catch (CloneNotSupportedException e) {}
 			}
 
 			ArrayList<ArrayList<LinkedList<Vertex>>> sets = buildMySet(maxdegree);
@@ -100,9 +102,7 @@ public class FiducciaMattheyses implements LocalSearch {
 			if (overallbest == null || overallbest.getScore() > bestknown.getScore()) {
 				improovement = true;
 
-				try {
-					overallbest = (Partition) bestknown.clone();
-				} catch (CloneNotSupportedException e) {}
+				overallbest = bestknown;
 			}
 
 		} while (improovement);
