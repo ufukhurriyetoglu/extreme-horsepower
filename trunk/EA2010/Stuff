@@ -5,5 +5,5 @@ Stuff that have to be done:
 	b) Dirk's idea discovering the area of best solution
 2) COMPLETED Make KL faster
 3) Try Mutation only when the child is equal to the worst of partitionList
-4) Write GLS benchmark
+4) COMPLETED Write GLS benchmark
 
