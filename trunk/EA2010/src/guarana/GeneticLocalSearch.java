@@ -45,7 +45,7 @@ public class GeneticLocalSearch {
 			Partition parent1, parent2;			
 			
 			//Tournament selection
-			if (sel == 1) {
+			if (sel == TOURNAMENT) {
 				int tournamentSize = (int) (0.4*p);
 				List<Partition> tournament = new ArrayList<Partition>();
 				ArrayList<Partition> cl = (ArrayList<Partition>) ((ArrayList<Partition>) partitionList).clone();
@@ -63,7 +63,7 @@ public class GeneticLocalSearch {
 			} //Tournament end
 			
 			//Truncation selection
-			else if (sel == 2) {
+			else if (sel == TRUNCATION) {
 				//Truncation selection
 				float proportion = 2;
 				int trunc = (int) (p/proportion);
@@ -169,7 +169,7 @@ public class GeneticLocalSearch {
 	
 	public static void main(String[] args) {
 		int population = 50;
-		int times = 1000;
+		int times = 1500;
 		
 		Graph g = Util.makeGraphFromFile("U500.05");
 		SearchResult s = search_fixedPopulation(new FiducciaMattheyses(), population, times, RANDOM, g);
