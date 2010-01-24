@@ -1,5 +1,7 @@
 package guarana;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class KernighanLin implements LocalSearch {	
 
@@ -26,18 +28,41 @@ public class KernighanLin implements LocalSearch {
 			// for every vertices pair
 
 			do {
+				
+				// after swapping the vertices the scores change so i need to sort the lists again
+				// with the lists sorted chosing the best swap is done in (almost) constant time
+				// if we could find a way to keep the lists sorted when we update neighbours gain it will be faster
+				
+				Collections.sort(p0, new VertexGainComparator());
+				Collections.sort(p1, new VertexGainComparator());
+				
 				// find the swap that maximizes GainA + GainB - (connected(A,B) ? 1 : 0)
-				bestswap = null;
+				bestswap = new SwapDescriptor(p0.get(0), p1.get(0), 0, 0, g);
 
-				for (int iVa = 0; iVa < p0.size(); iVa++) {
-					for (int iVb = 0; iVb < p1.size(); iVb++) {
+				if (g.areNeighbours(bestswap.getvA(), bestswap.getvB())) { //maybe there is something better					
+					Vertex v; boolean found = false;					
 
-						SwapDescriptor th_swap = new SwapDescriptor(p0.get(iVa), p1.get(iVb), iVa, iVb, g);
+					int h = 1;	
+					
+					if (p0.size()>1) {										
+						while ( !found && (v = p1.get(h++)).getGain() == bestswap.getvB().getGain() ) {
+							if (! g.areNeighbours(v, bestswap.getvB()) ) {
+								bestswap = new SwapDescriptor(p0.get(0), v, 0, h-1, g);
+								found = true;
+							}
+						}
+					}
 
-						if (bestswap == null || th_swap.compareTo(bestswap) == 1) {
-							bestswap = th_swap;							
-						}					
-					}			
+
+					if (!found && p1.size()>1) {
+						h = 1;					
+						while ( !found && (v = p0.get(h++)).getGain() == bestswap.getvA().getGain() ) {
+							if (! g.areNeighbours(v, bestswap.getvA()) ) {
+								bestswap = new SwapDescriptor(v, p0.get(1), h-1, 0, g);
+								found = true;
+							}
+						}						
+					}
 				}			
 
 				// do the swap
@@ -69,6 +94,18 @@ public class KernighanLin implements LocalSearch {
 		return overallbest;
 	}
 
+	private class VertexGainComparator implements Comparator<Vertex> {
+		public int compare(Vertex v1, Vertex v2) {
+			if (v1.getGain() > v2.getGain()) {
+				return -1;
+			} else if (v1.getGain() == v2.getGain()) {
+				return 0;
+			} else {
+				return 1;
+			}
+		}
+	}
+	
 	public static void main(String args[]) {
 		Graph g = Util.makeGraphFromFile("G500.005");
 		g.initializePartition();
@@ -77,6 +114,6 @@ public class KernighanLin implements LocalSearch {
 		
 		Partition p = (new KernighanLin()).search(g);
 
-		System.out.println("final score with FM:"+p.getScore());
+		System.out.println("final score with KL:"+p.getScore());
 	}
 }

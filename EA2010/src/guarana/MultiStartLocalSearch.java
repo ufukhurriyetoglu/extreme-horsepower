@@ -71,36 +71,9 @@ public class MultiStartLocalSearch {
 	public static void main(String args[]) {
 		Graph g = Util.makeGraphFromFile("G500.005");
 		
-		// this is the code that produces the output needed for point 1.
 		
-		// step 1 - find 1000 local optima and plot the hamming distance between them and the best found	
-		
-		System.out.println("STEP 1 -------------------------------- ");
-		
-		SearchResult s = search_fixedNOptima(new FiducciaMattheyses(), 1000, g);
-		
-		System.out.println("FM 1000 LO distances ------------------ ");
-		Util.outHammingDistandScores(s);
-		
-		s = search_fixedNOptima(new KernighanLin(), 1000, g);
-		
-		System.out.println("KL 1000 LO distances ------------------ ");
-		Util.outHammingDistandScores(s);
-		
-		// step 2 - run 1000 times MSLS fixed Noptima (1000) with FM and KL output the best scores found
-		System.out.println("STEP 2 -------------------------------- ");
-		
-		System.out.println("FM     -------------------------------- ");
-		for (int k = 0; k < 100; k++) {
-			s = search_fixedNOptima(new FiducciaMattheyses(), 1000, g);
-			System.out.println(s.best.getScore());
-		}
-		
-		System.out.println("KL     -------------------------------- ");
-		for (int k = 0; k < 100; k++) {
-			s = search_fixedNOptima(new FiducciaMattheyses(), 1000, g);
-			System.out.println(s.best.getScore());
-		}
+		SearchResult s = search_fixedNOptima(new KernighanLin(), 1, g);
+		System.out.println("best: "+s.best.getScore()+" elapsed: "+s.elapsed);
 		
 		//search_fixedTime(new KernighanLin(), 10000, g);		
 	}
