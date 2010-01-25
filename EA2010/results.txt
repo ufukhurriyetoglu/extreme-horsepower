@@ -42,3 +42,7 @@ G2 mean 7.020000 stddev 2.628438 min 2.000000 max 13.000000 (TIME mean 3193.4100
 GLS(FM) pop 50, ? generations, truncation SEL (50% pop)
 G1 mean 54.570000 stddev 1.810491 min 50.000000 max 59.000000 (TIME mean 2477.330000 s)
 G2 mean 9.010000 stddev 2.999983 min 2.000000 max 15.000000 (TIME mean 2940.220000 s)
+
+GLS(FM) pop 50, 1500 generations, random SEL + CHERNOBIL
+G1 mean 52.860000 stddev 1.717527 min 49.000000 max 58.000000 (TIME mean 3055.480000 s)
+G2 mean 6.030000 stddev 2.176342 min 2.000000 max 11.000000 (TIME mean 4361.690000 s)
