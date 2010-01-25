@@ -1,0 +1,44 @@
+
+FM Fidxed Optima (1000) 100 ex
+G1 mean 60.28 stdev 1.498 min 55 max 63 (TIME mean 6.6477s)
+G2 mean 16.59 stddev 2.712 min 6 max 22 (TIME mean 7.0532s)
+
+FM Fixed Time (10s) 100 ex
+G1 mean 59.63 stddev 1.2032 min 56 max 62
+G2 mean 15.55 stddev 2.6719 min 8 max 22
+
+ILS(FM) mutation 100, 100 ex
+G1 mean 55.97 stddev 2.2449 min 51 max 63 (TIME mean 4.5897s)
+G2 mean 9.45 stddev 2.9211 min 3 max 18 (TIME mean 4.4701s)
+
+ILS(FM) mutation 50, 100 ex
+G1 mean 56.01 stddev 2.4391 min 51 max 63 (TIME mean 4.5897s)
+G2 mean 9.21 stddev 3.2545 min 3 max 19 (TIME mean 4.4837s)
+
+ILS(FM) mutation 10, 100 ex
+G1 mean 58 stddev 2.6629 min 53 max 65 (TIME mean 2.9225s)
+G2 mean 23.54 stddev 7.0172 min 10 max 40 (TIME mean 3.0520s)
+
+GLS(FM) pop 25, ? generations, random SEL
+G1 mean 54.660000 stddev 1.634353 min 51.000000 max 58.000000 (TIME mean 1645.500000 s)
+G2 mean 9.180000 stddev 3.069498 min 2.000000 max 21.000000 (TIME mean 2903.900000 s)
+
+GLS(FM) pop 25, ? generations, tournament SEL (40% pop)
+G1 mean 54.760000 stddev 1.729833 min 51.000000 max 59.000000 (TIME mean 1286.590000 s)
+G2 mean 9.400000 stddev 3.604150 min 2.000000 max 20.000000 (TIME mean 2861.750000 s)
+
+GLS(FM) pop 25, ? generations, truncation SEL (50% pop)
+G1 mean 57.210000 stddev 2.128664 min 52.000000 max 66.000000 (TIME mean 832.100000 s)
+G2 mean 12.680000 stddev 3.684201 min 4.000000 max 24.000000 (TIME mean 1090.590000 s)
+
+GLS(FM) pop 50, ? generations, random SEL
+G1 mean 52.870000 stddev 1.709480 min 49.000000 max 57.000000 (TIME mean 3375.910000 s)
+G2 mean 5.990000 stddev 2.176528 min 2.000000 max 11.000000 (TIME mean 4743.580000 s)
+
+GLS(FM) pop 50, generations, tournament SEL (40% pop)
+G1 mean 53.730000 stddev 1.734120 min 50.000000 max 57.000000 (TIME mean 2507.730000 s)
+G2 mean 7.020000 stddev 2.628438 min 2.000000 max 13.000000 (TIME mean 3193.410000 s)
+
+GLS(FM) pop 50, ? generations, truncation SEL (50% pop)
+G1 mean 54.570000 stddev 1.810491 min 50.000000 max 59.000000 (TIME mean 2477.330000 s)
+G2 mean 9.010000 stddev 2.999983 min 2.000000 max 15.000000 (TIME mean 2940.220000 s)
