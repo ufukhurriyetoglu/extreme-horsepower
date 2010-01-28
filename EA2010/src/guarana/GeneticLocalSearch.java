@@ -119,7 +119,7 @@ public class GeneticLocalSearch {
 		}
 		
 		Collections.sort(partitionList);
-		System.out.println(partitionList.get(0).getScore());
+		//System.out.println(partitionList.get(0).getScore());
 		time = System.currentTimeMillis() - time;
 		return new SearchResult(alloptima, partitionList.get(0), time);		
 	}
@@ -168,11 +168,11 @@ public class GeneticLocalSearch {
 	}
 	
 	public static void main(String[] args) {
-		int population = 50;
+		int population = 150;
 		int times = 1500;
 		
 		Graph g = Util.makeGraphFromFile("U500.05");
-		SearchResult s = search_fixedPopulation(new FiducciaMattheyses(), population, times, RANDOM, g);
+		SearchResult s = search_fixedPopulation(new FiducciaMattheyses(), population, times, TRUNCATION, g);
 		System.out.println("GLS-FM Pop= "+population
 				+" Times= "+times+" LO distances ----------------");
 		Util.outHammingDistandScores(s);
