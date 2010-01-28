@@ -73,18 +73,6 @@ public class Graph {
 				bestGainVertex = v;
 		}
 		partitioning.setScore(GraphUtil.score(partitionA));
-		/* more debugging here
-		System.out.println("ScoreA = " + partitioning.getScore());
-		System.out.println("ScoreB = " + GraphUtil.score(partitionB));
-		System.out.println("BGV = " + bestGainVertex);
-		System.out.println(partitionA.get(0) + ", " + partitionB.get(0)); 
-		switchVertex(partitionA.get(0));
-		switchVertex(partitionB.get(0));
-		System.out.println("ScoreP = " + partitioning.getScore());
-		System.out.println("ScoreA = " + GraphUtil.score(partitionA));
-		System.out.println("ScoreB = " + GraphUtil.score(partitionB));
-		*/
-		
 	}
 	
 
