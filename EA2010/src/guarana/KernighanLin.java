@@ -23,7 +23,7 @@ public class KernighanLin implements LocalSearch {
 			SwapDescriptor bestswap = null;
 
 			// make a copy of the two current partition lists
-			// java cast rules can suck my dick
+			
 			ArrayList<Vertex> p0 = (ArrayList<Vertex>) ((ArrayList<Vertex>) g.getPartition0()).clone();
 			ArrayList<Vertex> p1 = (ArrayList<Vertex>) ((ArrayList<Vertex>) g.getPartition1()).clone();
 
